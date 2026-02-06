@@ -1,1 +1,49 @@
 
+
+#admin-page {
+    background-color: rgb(237, 230, 230);
+}
+
+#admin-orders, table, th, td {
+    border: solid 1px black;
+}
+
+.admin-tabs {
+    border-bottom: 1px solid black;
+}
+
+#admin-orders-overzicht {
+    background-color: gray;
+}
+
+#admin-packages {
+   border: solid 1px black;
+}
+
+#admin-orders-header { 
+    background-color: rgb(202, 199, 199);
+   display: flex;
+   justify-content: space-evenly;
+}
+
+#admin-orders-header {
+    border-bottom: solid 1px black;
+}
+
+#Tarieven-content {
+    border:  solid 1px black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#admin-footer {
+    border: solid 1px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+}
+
+#admin-beheren-content {
+}
