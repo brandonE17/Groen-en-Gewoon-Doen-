@@ -89,6 +89,10 @@
     padding: 5px 0;
 }
 
+.menu__item {
+    margin-right: 20px;
+    
+}
 
 button {
     background: lightgreen;
