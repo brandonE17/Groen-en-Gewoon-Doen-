@@ -105,4 +105,33 @@ button {
 
 button:hover {
     background: #7fe27f;
+} 
+
+@media (max-width: 600px) {
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .hamburger {
+        font-size: 26px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 6px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    input[type="number"] {
+        width: 95%;
+        padding: 8px;
+    }
 }
