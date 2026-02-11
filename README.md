@@ -1,2 +1,2 @@
 # Groen-en-Gewoon-Doen-
-dit onze project voor een hovenier website
+dit is onze project voor een hovenier website

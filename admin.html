@@ -1,1 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin-Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="admin-page">
+        <h1> header</h1>
+    <div class="admin-tabs">
+        <button class="tabLinks" onclick="openOders(event, 'admin-orders')">
+            Orders
+        </button>
+         <button class="tabLinks" onclick="openOders(event, 'admin-Pakketten')">
+            Pakketten
+        </button>
+         <button class="tabLinks" onclick="openOders(event, 'admin-Tarieven')">
+            Tarieven
+        </button>
+    </div>
+    
 
+    <h1>Admin</h1>
+    <hr>
+    <div id="admin-content">
+        <h2>Order Overzicht</h2>
+        <hr>
+        <div id="admin-orders">
+        <table>
+            <tr>
+                <div id="admin-orders-overzicht">
+                <th>Order ID</th>
+                 <th>Klant</th>
+                  <th>Details</th>
+                   <th>Offerte</th>
+                    <th>Status</th>
+                      <th>Actos</th>
+
+                    </div>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                 <td>2</td>
+                  <td>3</td>
+                   <td>4</td>
+                    <td>5</td>
+                     <td>6</td>
+            </tr>
+        </table> 
+        </div>
+        <hr>
+        <h2>Pakketten Beheren</h2>
+        <hr>
+        <div id="admin-packages">
+            <div id="admin-orders-header">
+                <tr>
+                    <th>Naam</th>
+                    <i>|</i>
+                    <th>Prijs</th>
+                    <i>|</i>
+                    <th><button>bewerk</button></th>
+                    <i>|</i>
+                    <th><button>verwijderen</button></th>
+                    <i>|</i>
+                    <th><button>vasvoegen</button></th>
+
+                </tr>
+            </div>
+        
+                <div id="admin-beheren-content">
+                    <P>Nieuw pakket</P>
+                    <hr>
+                    
+                    <form action="">
+                        <label for="name">Naam:</label>
+                        <input type="text" id="name">
+                        <br>
+                          <label for="beschrijving">beschrijving:</label>
+                        <input type="text" id="beschrijving">
+                        <br>
+                          <label for="prijs">Prijs:</label>
+                        <input type="number" id="prijs">
+                        <br>
+                        <input type="submit" value="Toevoegen" id="admin-btn-beheren" >
+                    </form>
+
+
+                </div>
+            </div>
+            <h2>Tarieven Beheren</h2>
+            <div id="Tarieven-content">
+                <i>Prijs per m2 Gras | Prijs per n2 Tegels</i> 
+                <form action="">
+                    <input type="number" id="gras">
+                </form>
+                <input type="submit" value="opslaan">
+            </div>
+            <br>
+
+            <footer><div id="admin-footer">
+ Groen & gewoon doen - admin paneel
+            </div>
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>
