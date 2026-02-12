@@ -45,6 +45,9 @@
     height: 5vh;
 }
 
+body {
+    font-family: 'Verdana', sans-serif;
+}
 
 .site-nav {
     display: flex;
@@ -55,22 +58,17 @@
     position: relative;
 }
 
-
-
-
 .hamburger {
     font-size: 30px;
     color: black;   
     
 }
 
-
 .menu-text {
     font-size: 18px;
     font-weight: bold;
     
 }
-
 
 .menu {
     position: absolute;
@@ -105,4 +103,67 @@ button {
 
 button:hover {
     background: #7fe27f;
+}
+#loginBtn {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+#loginBtn:hover {
+    background-color: #1b5e20;
+}
+
+#burger-btn {
+    background-color: #f4f4f4;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+#burger-btn:hover {
+    background-color: #2e7d32;
+    color: white;
+}
+.menu-btn {
+    text-decoration: none;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    font-size: 15px;
+    padding: 3px 9px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.menu-btn:hover {
+    background-color: #1b5e20;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Popup box */
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Sluit knop */
+.close {
+    float: right;
+    font-size: 22px;
+    cursor: pointer;
 }
