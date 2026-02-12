@@ -10,23 +10,18 @@
 <hr>
 <body>
     <nav class="site-nav">
-           <h2 class="logo">Groen & gewoon doen</h2>
+    <h2 class="logo">Groen & gewoon doen</h2>
 
-         
-        <div class="hamburger-menu">
-            </label>
-            <ul class="menu__box">
-                
-             <a class="menu__item" href="#">Menu</a>
+    <div class="nav-right">
+        <a class="menu-btn" href="#">Menu</a>
+        <button id="loginBtn" class="login-btn">Login</button>
 
-                <button id="burger-btn">☰</button>
-                <nav id="burger-menu" hidden>
-                <a href="#">Home</a>
-                <a href="#">Over ons</a>
-                <a href="#">Contact</a>
-            </ul>
+        <button id="burger-btn">☰</button>
+
+        <div id="burger-menu" class="burger-menu">
         </div>
-    </nav> 
+    </div>
+</nav>
     <hr>
       <h2>Welkom!</h2>
         <p>Bestel uw tuinservice eenvoudig online!</p>
@@ -36,22 +31,23 @@
         <div class="dropdown">
         <label>
             <select>
-                <option>Basic Pakket</option>
-                <option>Standaard Pakket</option>
-                <option>Premium Pakket</option>
+                <option>10 uur pakket</option>
+                <option>50 uur pakket</option>
+                <option>100 uur pakket</option>
             </select>
         </div>
   <button type="button">Bestel</button>
         </div>
     <hr>
         <div class="container">
-            <h2>Custom offerte</h2>
-                <form action=""></form>
-                    <label for="name">m2 Gras:</label>
-                    <br>
-                    <label for="name">m2 Tegels:</label>
-                    <br>
-                    <label for="name">Meters Heg:</label>
+    <h2>Custom offerte</h2>
+    <form action="">
+        M² Gras: <input type="number" name="m2_gras" min="0" max="2000">
+        <br>
+        M² Tegels: <input type="number" name="m2_tegel" min="0" max="2000">
+        <br>            
+        M² Heg: <input type="number" name="m2_heg" min="0" max="2000">
+      </form>
                 <form action="">
                     <input type="checkbox" id="Onkruid" name="Onkruid" value="Onkruid">
                     <label for="Onkruid"> Onkruid weghalen</label>
@@ -94,7 +90,22 @@
     <td>8 juni 2026</td>
   </tr>
 </table>
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Login</h2>
+        <input type="text" placeholder="Gebruikersnaam"><br><br>
+        <input type="password" placeholder="Wachtwoord"><br><br>
+        <button>Inloggen</button>
+    </div>
+</div>
+<footer class="site-footer">
+    <a href="#">Home</a>
+    <a href="#">Over ons</a>
+    <a href="#">Contact</a>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
- 
 </html>
  
