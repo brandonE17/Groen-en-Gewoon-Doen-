@@ -121,7 +121,7 @@ button {
     font-size: 16px;
 }
 
-/* CUSTOM OFFERTE - INVOERVELDEN */
+/* CUSTOM OFFERTE STIJLEN */
 .custom-offerte {
     margin-bottom: 30px;
 }
@@ -212,6 +212,74 @@ button:hover {
     background: #7fe27f;
 } 
 
+/* STANDAARD PAKKETTEN */
+.standaard-pakketten {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+  
+    margin-bottom: 30px;
+}
+
+.standaard-pakketten h2 {
+    color: #000000;
+    font-size: 24px;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.pakket-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.pakket-select {
+ 
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.pakket-select label {
+    font-size: 16px;
+    color: #555;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.pakket-select select {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: white;
+    max-width: 300px;
+}
+
+.pakket-select select:focus {
+    border-color: #2c5e2e;
+}
+
+.bestel-button {
+    background-color: #2c5e2e;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+   
+}
+ 
+.bestel-button:hover {
+    background-color: #1e3f20;
+}
 @media (max-width: 600px) {
 
     .logo {
@@ -295,7 +363,7 @@ button:hover {
     border-radius: 10px;
     text-align: center;
 }
-
+ 
 /* Sluit knop */
 .close {
     float: right;
