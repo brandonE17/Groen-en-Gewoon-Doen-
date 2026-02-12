@@ -1,18 +1,138 @@
-.hamburger {
-    width: 30px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 20px;
+
+
+#admin-page {
+    background-color: rgb(237, 230, 230);
 }
 
-.hamburger span {
-    display: block;
-    height: 3px;
-    background: black;
-    border-radius: 3px;
+#admin-orders, table, th, td {
+    border: solid 1px black;
 }
-.hamburger:hover span {
-    background: green;
+
+.admin-tabs {
+    border-bottom: 1px solid black;
 }
+
+#admin-orders-overzicht {
+    background-color: gray;
+}
+
+#admin-packages {
+   border: solid 1px black;
+}
+
+#admin-orders-header { 
+    background-color: rgb(202, 199, 199);
+   display: flex;
+   justify-content: space-evenly;
+}
+
+#admin-orders-header {
+    border-bottom: solid 1px black;
+} 
+
+#Tarieven-content {
+    border:  solid 1px black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#admin-footer {
+    border: solid 1px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+}
+
+
+.site-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: #f4f4f4;
+    position: relative;
+}
+
+
+
+
+.hamburger {
+    font-size: 30px;
+    color: black;   
+    
+}
+
+
+.menu-text {
+    font-size: 18px;
+    font-weight: bold;
+    
+}
+
+
+.menu {
+    position: absolute;
+    right: 15px;
+    top: 60px;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu a {
+    color: black;
+    text-decoration: none;
+    padding: 5px 0;
+}
+
+.menu__item {
+    margin-right: 20px;
+    
+}
+
+button {
+    background: lightgreen;
+    border: 1px solid green;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #7fe27f;
+} 
+
+@media (max-width: 600px) {
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .hamburger {
+        font-size: 26px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 6px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    input[type="number"] {
+        width: 95%;
+        padding: 8px;
+    }
+}
+ 
