@@ -1,48 +1,16 @@
 
-
-#admin-page {
-    background-color: rgb(237, 230, 230);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-#admin-orders, table, th, td {
-    border: solid 1px black;
-}
+body {
 
-.admin-tabs {
-    border-bottom: 1px solid black;
-}
-
-#admin-orders-overzicht {
-    background-color: gray;
-}
-
-#admin-packages {
-   border: solid 1px black;
-}
-
-#admin-orders-header { 
-    background-color: rgb(202, 199, 199);
-   display: flex;
-   justify-content: space-evenly;
-}
-
-#admin-orders-header {
-    border-bottom: solid 1px black;
-} 
-
-#Tarieven-content {
-    border:  solid 1px black;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-#admin-footer {
-    border: solid 1px black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 5vh;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    width: 100%;
 }
 
 
@@ -50,7 +18,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 15px;
+    padding: 20px 20px;
     background-color: #f4f4f4;
     position: relative;
 }
@@ -59,9 +27,11 @@
 
 
 .hamburger {
-    font-size: 30px;
-    color: black;   
     
+      font-size: 30px;
+    color: #2c5e2e;
+    cursor: pointer;
+    padding: 5px 10px;
 }
 
 
@@ -83,15 +53,28 @@
     flex-direction: column;
 }
 
-.menu a {
-    color: black;
-    text-decoration: none;
-    padding: 5px 0;
-}
+
 
 .menu__item {
     margin-right: 20px;
     
+}
+
+.welkom {
+    text-align: center;
+    margin-bottom: 50px;
+    
+}
+
+.welkom h1 {
+    font-size: 36px;
+    color: #2c5e2e;
+    margin-bottom: 10px;
+}
+
+.welkom p {
+    font-size: 18px;
+    color: #666;
 }
 
 button {
@@ -136,3 +119,47 @@ button:hover {
     }
 }
  
+#admin-page {
+    background-color: rgb(237, 230, 230);
+}
+
+#admin-orders, table, th, td {
+    border: solid 1px black;
+}
+
+.admin-tabs {
+    border-bottom: 1px solid black;
+}
+
+#admin-orders-overzicht {
+    background-color: gray;
+}
+
+#admin-packages {
+   border: solid 1px black;
+}
+
+#admin-orders-header { 
+    background-color: rgb(202, 199, 199);
+   display: flex;
+   justify-content: space-evenly;
+}
+
+#admin-orders-header {
+    border-bottom: solid 1px black;
+} 
+
+#Tarieven-content {
+    border:  solid 1px black;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#admin-footer {
+    border: solid 1px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+}
