@@ -1,48 +1,214 @@
 
 
-#admin-page {
-    background-color: rgb(237, 230, 230);
+th {
+    background-color: #2c5e2e;
+    color: white;
+    font-weight: 600;
+    padding: 14px 12px;
+    text-align: left;
+    font-size: 15px;
 }
 
-#admin-orders, table, th, td {
-    border: solid 1px black;
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e9ecef;
+    color: #2c3e50;
 }
 
-.admin-tabs {
-    border-bottom: 1px solid black;
+#admin-orders {
+    margin-bottom: 30px;
 }
 
 #admin-orders-overzicht {
-    background-color: gray;
+    background-color: transparent;
 }
+
 
 #admin-packages {
-   border: solid 1px black;
-}
-
-#admin-orders-header { 
-    background-color: rgb(202, 199, 199);
-   display: flex;
-   justify-content: space-evenly;
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
 }
 
 #admin-orders-header {
-    border-bottom: solid 1px black;
-} 
-
-#Tarieven-content {
-    border:  solid 1px black;
+    background-color: #2c5e2e ;
+    color: white;
+    padding: 14px 16px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
+    margin-bottom: 25px;
 }
 
-#admin-footer {
-    border: solid 1px black;
+#admin-orders-header th {
+    background-color: transparent;
+    color: white;
+    padding: 0;
+    font-size: 16px;
+}
+
+#admin-orders-header i {
+    color: rgba(255,255,255,0.5);
+    font-style: normal;
+    font-weight: 300;
+}
+
+#admin-orders-header button {
+    background-color: white;
+    color: #2c5e2e;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* PAKKEtTjes FORM */
+#admin-beheren-content p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e3f20;
+    margin-bottom: 15px;
+}
+
+#admin-beheren-content hr {
+    border: none;
+    border-top: 2px solid #2c5e2e;
+    margin: 15px 0 25px 0;
+    width: 100px;
+}
+
+#admin-beheren-content form {
+    background-color: #f8f9fc;
+    padding: 25px;
+    border-radius: 8px;
+    max-width: 600px;
+}
+
+#admin-beheren-content label {
+    display: inline-block;
+    width: 120px;
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 12px;
+}
+
+
+
+#admin-btn-beheren {
+    background-color: #2c5e2e;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 15px;
+
+}
+
+#admin-btn-beheren:hover {
+    background-color: #1e3f20;
+}
+
+#Tarieven-content {
+    background-color: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 25px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 5vh;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin: 20px 0;
+}
+
+#Tarieven-content i {
+    font-size: 16px;
+    color: #2c5e2e;
+    font-weight: 500;
+    font-style: normal;
+    background-color: #e8f1e8;
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+
+#Tarieven-content input[type="number"] {
+    padding: 10px 14px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 15px;
+    width: 120px;
+}
+
+#Tarieven-content input[type="submit"] {
+    background-color: #2c5e2e;
+    color: white;
+
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+   
+    
+}
+
+#Tarieven-content input[type="submit"]:hover {
+    background-color: #1e3f20;
+}
+
+/* FOOTER */
+#admin-footer {
+    background-color: #2c5e2e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 40px;
+    height: auto;
+}
+
+/* DIVIDERS */
+#admin-page hr {
+    border: none;
+    border-top: 2px solid #2c5e2e;
+    margin: 20px 0;
+    width: 100%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    #admin-page {
+        padding: 20px;
+    }
+    
+    .admin-tabs {
+        flex-direction: column;
+    }
+    
+    .tabLinks {
+        border-radius: 6px;
+    }
+    
+    #admin-orders-header {
+        flex-wrap: wrap;
+    }
+    
+    #admin-beheren-content input[type="text"],
+    #admin-beheren-content input[type="number"] {
+        width: 100%;
+    }
+    
+    #Tarieven-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 body {
