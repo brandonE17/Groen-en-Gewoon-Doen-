@@ -1,24 +1,11 @@
-// const http = require('http');
+const fs = require("fs");
+const path = require("path");
+const express = require("express");
 
-// http.createServer(function (req, res) {
-//     res.writeHead(200, { 'Content-Type': 'text/plain' });
-//     res.end('Hello World!');
-// }).listen(8080, () => {
-//     console.log('Server running at http://localhost:8080/');
-// });
-const http = require('http');
-
-http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello World!');
-}).listen(8080, '127.0.0.1', () => {
-  console.log('Server running at http://127.0.0.1:8080/');
-});
-
-const express = require('express');
 const app = express();
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname)));
 
 app.get('/status', (req, res) => {
   res.json({
@@ -27,5 +14,22 @@ app.get('/status', (req, res) => {
   });
 });
 
+app.post('/orders', (req, res) => {
+  const newOrder = req.body;
+  let orders = [];
+
+  if (fs.existsSync("orders.json")) {
+    const data = fs.readFileSync("orders.json", "utf8");
+    orders = JSON.parse(data);
+  }
+
+  orders.push(newOrder);
+  fs.writeFileSync("orders.json", JSON.stringify(orders, null, 2));
+
+  res.json({ message: "Order saved", order: newOrder });
+});
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
