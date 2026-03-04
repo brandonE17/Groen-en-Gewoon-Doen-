@@ -14,7 +14,11 @@
 
     <div class="nav-right">
         <a class="menu-btn" href="#">Menu</a>
+        <span id="userInfo" style="display: none; color: #2e7d32; font-weight: bold; margin-right: 10px;">
+            Welkom <span id="userName"></span>
+        </span>
         <button id="loginBtn" class="login-btn">Login</button>
+        <button id="logoutBtn" class="login-btn" style="display: none; background-color: #f44336;">Uitloggen</button>
 
         <button id="burger-btn">☰</button>
 
@@ -54,7 +58,7 @@
                     <input type="checkbox" id="meststof" name="meststof" value="meststof">
                     <label for="meststof"> Meststof aanbrengen</label>
                     <button type="button">Bereken Offerte</button>
- 
+                </form>
         </div>
     <hr>
      <div class="container">
@@ -94,10 +98,13 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Login</h2>
-        <input type="text" placeholder="Gebruikersnaam"><br><br>
-        <input type="password" placeholder="Wachtwoord"><br><br>
-        <button>Inloggen</button>
-        <button>Registreren</button>
+        <form id="loginForm">
+            <input type="text" id="uname" name="uname" placeholder="Gebruikersnaam" required><br><br>
+            <input type="password" id="psw" name="psw" placeholder="Wachtwoord" required><br><br>
+            <div id="loginMessage" style="color: red; margin-bottom: 10px; display: none;"></div>
+            <button type="submit">Inloggen</button>
+        </form>
+        <p style="font-size: 12px; margin-top: 15px;">Test: admin / wachtwoord123</p>
     </div>
 </div>
 <footer class="site-footer">
