@@ -37,10 +37,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const hours = Number(document.getElementById("Hours").value);
 
     try {
+      // fetch hourly rate from server
+      const ratesRes = await fetch("/rates");
+      const rates = await ratesRes.json();
+      const price = hours * rates.hourlyRate;
+
       const res = await fetch("/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ hours }),
+        body: JSON.stringify({ hours, price }),
       });
 
       if (!res.ok) {
