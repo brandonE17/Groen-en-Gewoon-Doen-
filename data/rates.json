@@ -1,3 +1,20 @@
 {
-  "hourlyRate": 70
+  "hourlyRate": 70,
+  "packages": [
+    {
+      "name": "10 uur pakket",
+      "hours": 10,
+      "price": 700
+    },
+    {
+      "name": "50 uur pakket",
+      "hours": 50,
+      "price": 3500
+    },
+    {
+      "name": "100 uur pakket",
+      "hours": 100,
+      "price": 7000
+    }
+  ]
 }

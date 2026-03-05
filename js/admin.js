@@ -1,1 +1,101 @@
+document.addEventListener("DOMContentLoaded", async function () {
+  // Load and display packages
+  async function loadPackages() {
+    try {
+      const res = await fetch("/rates");
+      const data = await res.json();
+      const packagesTable = document.getElementById("packagesTable");
+      
+      // Clear existing rows except header
+      const rows = packagesTable.querySelectorAll("tr:not(:first-child)");
+      rows.forEach(row => row.remove());
+      
+      // Add package rows
+      if (data.packages && Array.isArray(data.packages)) {
+        data.packages.forEach((pkg, index) => {
+          const row = packagesTable.insertRow();
+          row.innerHTML = `
+            <td>${pkg.name}</td>
+            <td>${pkg.hours}</td>
+            <td>€${pkg.price.toFixed(2)}</td>
+            <td><button type="button" onclick="deletePackage(${index})">Verwijderen</button></td>
+          `;
+        });
+      }
+    } catch (err) {
+      console.error("Error loading packages:", err);
+    }
+  }
+
+  // Delete package
+  window.deletePackage = async function (id) {
+    if (confirm("Weet je zeker dat je dit pakket wilt verwijderen?")) {
+      try {
+        const res = await fetch(`/packages/${id}`, { method: "DELETE" });
+        if (!res.ok) throw new Error("Failed to delete package");
+        await loadPackages();
+      } catch (err) {
+        console.error("Error deleting package:", err);
+        alert("Pakket kon niet verwijderd worden");
+      }
+    }
+  };
+
+  // Add new package
+  const packageForm = document.getElementById("packageForm");
+  if (packageForm) {
+    packageForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("packageName").value;
+      const hours = Number(document.getElementById("packageHours").value);
+      const price = Number(document.getElementById("packagePrice").value);
+
+      try {
+        const res = await fetch("/packages", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, hours, price }),
+        });
+
+        if (!res.ok) throw new Error("Failed to add package");
+
+        packageForm.reset();
+        await loadPackages();
+      } catch (err) {
+        console.error("Error adding package:", err);
+        alert("Pakket kon niet toegevoegd worden");
+      }
+    });
+  }
+
+  // Update hourly rate
+  const rateForm = document.getElementById("rateForm");
+  if (rateForm) {
+    rateForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const hourlyRate = Number(document.getElementById("hourlyRate").value);
+
+      try {
+        const res = await fetch("/rates", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ hourlyRate }),
+        });
+
+        if (!res.ok) throw new Error("Failed to update rate");
+
+        alert("Tarief opgeslagen!");
+        rateForm.reset();
+      } catch (err) {
+        console.error("Error updating rate:", err);
+        alert("Tarief kon niet opgeslagen worden");
+      }
+    });
+  }
+
+  // Load packages on page load
+  await loadPackages();
+});
 
