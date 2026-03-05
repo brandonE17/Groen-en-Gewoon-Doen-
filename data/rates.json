@@ -1,3 +1,8 @@
-{
-  "hourlyRate": 70
-}
+
+[
+  { "id": "gras", "number": 25 },
+  { "id": "tegels", "number": 30 },
+  { "id": "heg", "number": 40 }
+]
+
+
