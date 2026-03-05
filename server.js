@@ -14,6 +14,16 @@ app.get('/status', (req, res) => {
   });
 });
 
+// return current rate settings from data/rates.json
+app.get('/rates', (req, res) => {
+  if (fs.existsSync("data/rates.json")) {
+    const data = fs.readFileSync("data/rates.json", "utf8");
+    res.json(JSON.parse(data));
+  } else {
+    res.json({});
+  }
+});
+
 app.post('/orders', (req, res) => {
   const newOrder = req.body;
   let orders = [];
