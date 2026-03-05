@@ -1,7 +1,7 @@
-import { testPackages } from "../data/packages.js";
+
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("demo").innerHTML = JSON.stringify(testPackages, null, 2);
+
 
   const modal = document.getElementById("loginModal");
   const btn = document.getElementById("loginBtn");
@@ -57,4 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Kon bestelling niet verzenden. Controleer of de server draait op http://localhost:3000.");
     }
   });
+
+  
 });
