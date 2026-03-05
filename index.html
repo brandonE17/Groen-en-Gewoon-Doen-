@@ -39,7 +39,11 @@
        
   <button type="button">Bestel</button>
     <pre id="demo"></pre>      
+
+    
 <script type="module" src="js/main.js"></script>
+
+
   <button  id="customBtn">
             Custom Pakket
            </button>
@@ -53,14 +57,38 @@
               <h1> Custem pakket</h1>
               <p>Vul hier in hoeveel uren uw wilt in uw custem pakket.</p>
               <form id="customForm">
-            <label for="werk uren">Werk uren:</label><br>
-            <input type="number" id="Hours" name="Hours">
+            <label for="werk uren">Werk uren: </label><br>
+          
+            <input
+             type="number" 
+             id="Hours"
+              name="Hours" 
+               inputmode="numeric"
+               max="1000"
+               min="1"
+               placeholder="Max 1000"
+            >
+           
             <br>
             <input type="submit" value="Submit" id="submit">
             </form>
             </div>
            </div>
        
+
+
+
+
+<form>
+<input type="number" name="gras">
+<input type="number" name="Tegels">
+<input type="number" name="heg">
+
+
+
+<input type="submit" >
+</form>
+
 
 
     <hr>
