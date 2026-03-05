@@ -78,35 +78,28 @@
 
 
 
-
-<form>
-<input type="number" name="gras">
-<input type="number" name="Tegels">
-<input type="number" name="heg">
-
-
-
-<input type="submit" >
-</form>
-
+<!-- <input type="number" id="userNumber" placeholder="Enter a number">
+<button id="calcBtn">Calculate</button>
+<p id="result"></p> -->
 
 
     <hr>
         <div class="container">
     <h2>Custom offerte</h2>
     <form action="">
-        M² Gras: <input type="number" name="m2_gras" min="0" max="2000">
-        <br>
-        M² Tegels: <input type="number" name="m2_tegel" min="0" max="2000">
+        M² Gras: <input  type="number" id="gras" name="m2_gras" min="0" max="2000">
+        <br> 
+        M² Tegels: <input id="tegels" type="number" name="m2_tegel" min="0" max="2000">
         <br>            
-        M² Heg: <input type="number" name="m2_heg" min="0" max="2000">
+        M² Heg: <input id="heg" type="number" name="m2_heg" min="0" max="2000">
       </form>
                 <form action="">
                     <input type="checkbox" id="Onkruid" name="Onkruid" value="Onkruid">
                     <label for="Onkruid"> Onkruid weghalen</label>
                     <input type="checkbox" id="meststof" name="meststof" value="meststof">
                     <label for="meststof"> Meststof aanbrengen</label>
-                    <button type="button">Bereken Offerte</button>
+                    <button type="button" id="calcBtn" >Bereken Offerte</button>
+                    <p id="result"></p>
  
         </div>
     <hr>
@@ -157,7 +150,6 @@
     <a href="#">Over ons</a>
     <a href="#">Contact</a>
 </footer>
-
 
 </body>
 </html>
