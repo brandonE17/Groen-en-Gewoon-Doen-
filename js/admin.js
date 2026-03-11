@@ -99,3 +99,49 @@ document.addEventListener("DOMContentLoaded", async function () {
   await loadPackages();
 });
 
+const orderList = [
+  {
+    id: 1,
+    customer: "Brandon Brandonson",
+    items: ["10 uur pakket"],
+    total: 17,
+  },
+  {
+    id: 2,
+    customer: "Tijn Tijnson",
+    items: ["50 uur pakket"],
+    total: 85,
+  } 
+  
+];
+
+function renderCustomersOrders(orderList) {
+    const container = document.getElementById("orders");
+
+    // Maak de container leeg
+    container.innerHTML = "";
+
+    // Controleer of er orders zijn
+    if (!orderList || orderList.length === 0) {
+        container.innerHTML = "<p>Er zijn nog geen bestellingen.</p>";
+        return;
+    }
+ 
+    // Doorloop elke order
+    orderList.forEach(order => {
+        // Maak een wrapper
+        const orderDiv = document.createElement("div");
+        orderDiv.classList.add("order-item");
+
+        // HTML inhoud
+        orderDiv.innerHTML = `
+            <h3>Order #${order.id}</h3>
+            <p><strong>Klant:</strong> ${order.customer}</p>
+            <p><strong>Producten:</strong> ${order.items.join(", ")}</p>
+            <p><strong>Totaal:</strong> €${order.total.toFixed(2)}</p>
+        `;
+
+        container.appendChild(orderDiv);
+    });
+}
+renderCustomersOrders(orderList);
