@@ -1,11 +1,18 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
+
+// simple logger for all requests
+app.use((req, res, next) => {
+  console.log(`Incoming ${req.method} ${req.url}`);
+  next();
+});
 
 app.get('/status', (req, res) => {
   res.json({
@@ -39,7 +46,28 @@ app.post('/orders', (req, res) => {
   res.json({ message: "Order saved", order: newOrder });
 });
 
+app.post('/login', (req, res) => {
+  console.log('handling POST /login, body:', req.body);
+  try {
+    const { username, password } = req.body;
+    const users = JSON.parse(fs.readFileSync("server.json", "utf8"));
+    const user = users.find(u => u.username === username && u.password === password);
+    if (user) {
+      res.json({ success: true, message: "Login successful" });
+    } else {
+      res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// static should be served after all dynamic routes
+app.use(express.static(path.join(__dirname)));
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+// bind to 0.0.0.0 so both IPv4 and IPv6 clients can connect
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

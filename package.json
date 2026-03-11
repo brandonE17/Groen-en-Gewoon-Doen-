@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/brandonE17/Groen-en-Gewoon-Doen-/issues"
   },
-  "homepage": "https://github.com/brandonE17/Groen-en-Gewoon-Doen-#readme"
+  "homepage": "https://github.com/brandonE17/Groen-en-Gewoon-Doen-#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
 }
