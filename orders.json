@@ -1,29 +1,23 @@
 [
   {
-    "hours": 21
+    "id": "ORD-20260205-001",
+    "pakket": "Basic Pakket",
+    "offerte": "€150,-",
+    "status": "Goedgekeurd",
+    "datum": "25 april 2026"
   },
   {
-    "hours": 321412
+    "id": "ORD-20260205-002",
+    "pakket": "Standaard Pakket",
+    "offerte": "€249,-",
+    "status": "In behandeling",
+    "datum": "12 maart 2026"
   },
   {
-    "hours": 32131
-  },
-  {
-    "hours": 21
-  },
-  {
-    "hours": 2566
-  },
-  {
-    "hours": 1.1111111111111112e+132
-  },
-  {
-    "hours": 111111111111111110000
-  },
-  {
-    "hours": 2
-  },
-  {
-    "hours": 12
+    "id": "ORD-20260205-003",
+    "pakket": "Premium Pakket",
+    "offerte": "€75,-",
+    "status": "Afgerond",
+    "datum": "8 juni 2026"
   }
 ]
