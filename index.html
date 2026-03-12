@@ -87,7 +87,7 @@
         <div class="container">
     <h2>Custom offerte</h2>
     <form action="">
-        M² Gras: <input  type="number" id="gras" name="m2_gras" min="0" max="2000">
+        M² Gras: <input  type="number" id="g  ras" name="m2_gras" min="0" max="2000">
         <br> 
         M² Tegels: <input id="tegels" type="number" name="m2_tegel" min="0" max="2000">
         <br>            
@@ -106,35 +106,18 @@
      <div class="container">
         <h2>Mijn Orders</h2>
  
-<table style="width:100%">
-  <tr>
-    <th>Order ID</th>
-    <th>Pakket / | Info</th>
-    <th>Offerte</th>
-    <th>Status</th>
-    <th>Datum</th>
-  </tr>
-  <tr>
-    <td>ORD-20260205-001</td>
-    <td>Basic Pakket</td>
-    <td>€150,-</td>
-    <td>Goedgekeurd</td>
-    <td>25 april 2026</td>
-  </tr>
-  <tr>
-    <td>ORD-20260205-002</td>
-    <td>Standaard Pakket</td>
-    <td>€249,-</td>
-    <td>In behandeling</td>
-    <td>12 maart 2026</td>
-  </tr>
-  <tr>
-    <td>ORD-20260205-003</td>
-    <td>Premium pakket</td>
-    <td>€75,-</td>
-    <td>Afgerond</td>
-    <td>8 juni 2026</td>
-  </tr>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Pakket</th>
+      <th>Offerte</th>
+      <th>Status</th>
+      <th>Datum</th>
+    </tr>
+  </thead>
+
+  <tbody id="ordersTable"></tbody>
 </table>
 <div id="loginModal" class="modal">
     <div class="modal-content">

@@ -1,5 +1,6 @@
 
 
+
 document.addEventListener("DOMContentLoaded", function () {
 
 
@@ -96,5 +97,30 @@ document.getElementById("result").innerText =
 
 
   }
+
+  fetch("./orders.json")
+  .then( response => response.json())
+  .then(data => {
+    const order = document.getElementById("ordersTable");
+    
+
+    data.forEach((order) => {
+const TableHints = document.getElementById("ordersTable");
+
+    const row = `
+  <tr>
+    <td>${order.id}</td>
+    <td>${order.pakket}</td>
+    <td>${order.offerte}</td>
+    <td>${order.status}</td>
+    <td>${order.datum}</td>
+  </tr>
+`;
+
+    
+    TableHints.innerHTML += row;
+        
+    });
+  });
   
 });
