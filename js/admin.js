@@ -102,46 +102,64 @@ document.addEventListener("DOMContentLoaded", async function () {
 const orderList = [
   {
     id: 1,
-    customer: "Brandon Brandonson",
+    customer: "Brandon ",
     items: ["10 uur pakket"],
     total: 17,
   },
   {
     id: 2,
-    customer: "Tijn Tijnson",
+    customer: "Tijn ",
     items: ["50 uur pakket"],
     total: 85,
   } 
   
-];
+]; 
 
 function renderCustomersOrders(orderList) {
-    const container = document.getElementById("orders");
+  const tbody = document.getElementById("order-table-body");
+  tbody.innerHTML = "";
 
-    // Maak de container leeg
-    container.innerHTML = "";
+  if (!orderList || orderList.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6">Er zijn nog geen bestellingen.</td>
+      </tr>
+    `;
+    return;
+  }
 
-    // Controleer of er orders zijn
-    if (!orderList || orderList.length === 0) {
-        container.innerHTML = "<p>Er zijn nog geen bestellingen.</p>";
-        return;
-    }
- 
-    // Doorloop elke order
-    orderList.forEach(order => {
-        // Maak een wrapper
-        const orderDiv = document.createElement("div");
-        orderDiv.classList.add("order-item");
+  orderList.forEach(order => {
+    const row = document.createElement("tr");
 
-        // HTML inhoud
-        orderDiv.innerHTML = `
-            <h3>Order #${order.id}</h3>
-            <p><strong>Klant:</strong> ${order.customer}</p>
-            <p><strong>Producten:</strong> ${order.items.join(", ")}</p>
-            <p><strong>Totaal:</strong> €${order.total.toFixed(2)}</p>
-        `;
+    row.innerHTML = `
+      <td>${order.id}</td>
+      <td>${order.customer}</td>
+      <td>${order.items.join(", ")}</td>
+      <td>€${order.total.toFixed(2)}</td>
+      <td>In behandeling</td>
+      <td><button class="btn-details">Details</button></td>
+    `;
 
-        container.appendChild(orderDiv);
-    });
+    tbody.appendChild(row);
+  });
 }
 renderCustomersOrders(orderList);
+
+window.openOders = function (evt, tabName) {
+    const tabs = ["admin-orders", "admin-packages", "Tarieven-content"];
+
+    // Verberg alles
+    tabs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "none";
+    });
+
+    // Laat de gevraagde tab zien
+    const activeTab = document.getElementById(tabName);
+    if (activeTab) activeTab.style.display = "block";
+
+    // Als het de orders tab is, render de orders
+    if (tabName === "admin-orders") {
+        renderCustomersOrders(orderList);
+    }
+};
