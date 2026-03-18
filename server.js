@@ -17,26 +17,36 @@ app.get('/status', (req, res) => {
 // return current rate settings from data/rates.json
 app.get('/rates', (req, res) => {
   if (fs.existsSync("data/rates.json")) {
-    const data = fs.readFileSync("data/rates.json", "utf8");
-    res.json(JSON.parse(data));
+    const data = JSON.parse(fs.readFileSync("data/rates.json", "utf8"));
+    if (data.pricing) {
+      return res.json({
+        hourlyRate: data.pricing.hourlyRate || 0,
+        packages: data.pricing.packages || []
+      });
+    }
+    return res.json(data);
   } else {
-    res.json({});
+    res.json({ hourlyRate: 0, packages: [] });
   }
 });
 
 // Update hourly rate
 app.post('/rates', (req, res) => {
   const { hourlyRate } = req.body;
-  let rates = { hourlyRate: 70, packages: [] };
+  let data = { hourlyRate: 70, packages: [] };
 
   if (fs.existsSync("data/rates.json")) {
-    const data = fs.readFileSync("data/rates.json", "utf8");
-    rates = JSON.parse(data); 
+    data = JSON.parse(fs.readFileSync("data/rates.json", "utf8"));
   }
- 
-  rates.hourlyRate = hourlyRate;
-  fs.writeFileSync("data/rates.json", JSON.stringify(rates, null, 2));
 
+  if (data.pricing) {
+    data.pricing.hourlyRate = hourlyRate;
+  } else {
+    data.hourlyRate = hourlyRate;
+    if (!Array.isArray(data.packages)) data.packages = [];
+  }
+
+  fs.writeFileSync("data/rates.json", JSON.stringify(data, null, 2));
   res.json({ message: "Rate updated", hourlyRate });
 });
 
@@ -58,15 +68,21 @@ app.post('/orders', (req, res) => {
 // Manage packages
 app.post('/packages', (req, res) => {
   const newPackage = req.body;
-  let rates = { hourlyRate: 70, packages: [] };
+  let data = { hourlyRate: 70, packages: [] };
 
   if (fs.existsSync("data/rates.json")) {
-    const data = fs.readFileSync("data/rates.json", "utf8");
-    rates = JSON.parse(data);
+    data = JSON.parse(fs.readFileSync("data/rates.json", "utf8"));
   }
 
-  rates.packages.push(newPackage);
-  fs.writeFileSync("data/rates.json", JSON.stringify(rates, null, 2));
+  if (data.pricing) {
+    if (!Array.isArray(data.pricing.packages)) data.pricing.packages = [];
+    data.pricing.packages.push(newPackage);
+  } else {
+    if (!Array.isArray(data.packages)) data.packages = [];
+    data.packages.push(newPackage);
+  }
+
+  fs.writeFileSync("data/rates.json", JSON.stringify(data, null, 2));
 
   res.json({ message: "Package added", package: newPackage });
 });
@@ -74,31 +90,41 @@ app.post('/packages', (req, res) => {
 app.put('/packages/:id', (req, res) => {
   const { id } = req.params;
   const updatedPackage = req.body;
-  let rates = { hourlyRate: 70, packages: [] };
+  let data = { hourlyRate: 70, packages: [] };
 
   if (fs.existsSync("data/rates.json")) {
-    const data = fs.readFileSync("data/rates.json", "utf8");
-    rates = JSON.parse(data);
+    data = JSON.parse(fs.readFileSync("data/rates.json", "utf8"));
   }
 
-  rates.packages[id] = updatedPackage;
-  fs.writeFileSync("data/rates.json", JSON.stringify(rates, null, 2));
+  if (data.pricing) {
+    if (!Array.isArray(data.pricing.packages)) data.pricing.packages = [];
+    data.pricing.packages[id] = updatedPackage;
+  } else {
+    if (!Array.isArray(data.packages)) data.packages = [];
+    data.packages[id] = updatedPackage;
+  }
 
+  fs.writeFileSync("data/rates.json", JSON.stringify(data, null, 2));
   res.json({ message: "Package updated", package: updatedPackage });
 });
 
 app.delete('/packages/:id', (req, res) => {
   const { id } = req.params;
-  let rates = { hourlyRate: 70, packages: [] };
+  let data = { hourlyRate: 70, packages: [] };
 
   if (fs.existsSync("data/rates.json")) {
-    const data = fs.readFileSync("data/rates.json", "utf8");
-    rates = JSON.parse(data);
+    data = JSON.parse(fs.readFileSync("data/rates.json", "utf8"));
   }
 
-  rates.packages.splice(id, 1);
-  fs.writeFileSync("data/rates.json", JSON.stringify(rates, null, 2));
+  if (data.pricing) {
+    if (!Array.isArray(data.pricing.packages)) data.pricing.packages = [];
+    data.pricing.packages.splice(id, 1);
+  } else {
+    if (!Array.isArray(data.packages)) data.packages = [];
+    data.packages.splice(id, 1);
+  }
 
+  fs.writeFileSync("data/rates.json", JSON.stringify(data, null, 2));
   res.json({ message: "Package deleted" });
 });
 

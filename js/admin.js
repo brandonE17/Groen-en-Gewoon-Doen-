@@ -99,28 +99,33 @@ document.addEventListener("DOMContentLoaded", async function () {
   await loadPackages();
 });
 
-const orderList = [
+let orderList = [
   {
     id: 1,
-    customer: "Brandon ",
+    customer: "Brandon Brandonson",
     items: ["10 uur pakket"],
     total: 17,
   },
   {
     id: 2,
-    customer: "Tijn ",
+    customer: "Tijn Tijnson",
     items: ["50 uur pakket"],
     total: 85,
-  } 
-  
-]; 
+  }
+];
+
+function handleOrderAction(orderId, action) {
+  orderList = orderList.filter(order => order.id !== orderId);
+  renderCustomersOrders(orderList);
+  alert(`Order ${orderId} is ${action} en verwijderd uit de lijst.`);
+}
 
 function renderCustomersOrders(orderList) {
   const tbody = document.getElementById("order-table-body");
   tbody.innerHTML = "";
 
   if (!orderList || orderList.length === 0) {
-    tbody.innerHTML = `
+    tbody.innerHTML = ` 
       <tr>
         <td colspan="6">Er zijn nog geen bestellingen.</td>
       </tr>
@@ -137,8 +142,38 @@ function renderCustomersOrders(orderList) {
       <td>${order.items.join(", ")}</td>
       <td>€${order.total.toFixed(2)}</td>
       <td>In behandeling</td>
-      <td><button class="btn-details">Details</button></td>
+      <td class="order-actions">
+        <button class="btn-details">Details</button>
+      </td>
     `;
+
+    const detailsBtn = row.querySelector(".btn-details");
+    detailsBtn.addEventListener("click", () => {
+      const actionCell = row.querySelector(".order-actions");
+
+      // Toon niet opnieuw als actie-knoppen al zichtbaar zijn
+      if (actionCell.querySelector(".btn-approve")) {
+        return;
+      }
+
+      const approveBtn = document.createElement("button");
+      approveBtn.textContent = "Goedkeuren";
+      approveBtn.className = "btn-approve";
+
+      const rejectBtn = document.createElement("button");
+      rejectBtn.textContent = "Afkeuren";
+      rejectBtn.className = "btn-reject";
+
+      const cancelBtn = document.createElement("button");
+      cancelBtn.textContent = "Annuleren";
+      cancelBtn.className = "btn-cancel";
+
+      actionCell.append(" ", approveBtn, " ", rejectBtn, " ", cancelBtn);
+
+      approveBtn.addEventListener("click", () => handleOrderAction(order.id, "goedgekeurd"));
+      rejectBtn.addEventListener("click", () => handleOrderAction(order.id, "afgekeurd"));
+      cancelBtn.addEventListener("click", () => renderCustomersOrders(orderList));
+    });
 
     tbody.appendChild(row);
   });
