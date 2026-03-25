@@ -56,13 +56,16 @@ app.post('/rates', (req, res) => {
 
 app.post('/orders', (req, res) => {
   const newOrder = req.body;
+  newOrder.id = `ORD-${Date.now()}`;
+  newOrder.status = "Nieuw";
+  newOrder.date = new Date().toISOString();
   let orders = [];
 
   if (fs.existsSync("orders.json")) {
     const data = fs.readFileSync("orders.json", "utf8");
     orders = JSON.parse(data);
   }
-
+ 
   orders.push(newOrder);
   fs.writeFileSync("orders.json", JSON.stringify(orders, null, 2));
 
