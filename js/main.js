@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+  // Check if logged in
+  if (localStorage.getItem('loggedIn') === 'true') {
+    document.getElementById("loginBtn").innerText = "Uitloggen";
+  }
 
   const modal = document.getElementById("loginModal");
   const btn = document.getElementById("loginBtn");
@@ -12,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const messageDiv = document.getElementById("loginMessage");
         messageDiv.style.display = "none";
         btn.innerText = "Login";
-        // Optionally clear any session data, but since no session, just reset UI
+        localStorage.removeItem('loggedIn');
       }
     } else {
       modal.style.display = "block";
@@ -45,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (res.ok) {
         modal.style.display = "none";
+        localStorage.setItem('loggedIn', 'true');
         window.location.href = "/admin.html";
       } else {
         errorMsg.style.display = "block";
@@ -69,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
 
     const hours = Number(document.getElementById("Hours").value);
+    const klantNaam = document.getElementById("klantNaam").value;
 
     try {
       // fetch hourly rate from server
@@ -79,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const res = await fetch("/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ hours, price }),
+        body: JSON.stringify({ hours, price, klant: klantNaam }),
       });
 
       if (!res.ok) {
@@ -95,6 +101,26 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (err) {
       console.error("Could not submit order:", err);
       alert("Kon bestelling niet verzenden. Controleer of de server draait op http://localhost:3000.");
+    }
+  });
+
+  // Bestel standaard pakket
+  document.getElementById("bestelStandaard").addEventListener("click", async () => {
+    const selected = document.querySelector("select").value;
+    try {
+      const res = await fetch("/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ package: selected, price: 0 })
+      });
+      if (res.ok) {
+        alert("Bestelling geplaatst!");
+        loadOrders();
+      } else {
+        alert("Fout bij bestellen");
+      }
+    } catch (err) {
+      alert("Fout: " + err.message);
     }
   });
 
@@ -133,7 +159,7 @@ async function loadOrders() {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${order.id}</td>
-        <td>${order.hours ? order.hours + " uur" : order.package || "N/A"}</td>
+        <td>${order.klant || "Anoniem"} - ${order.hours ? order.hours + " uur" : order.package || "N/A"}</td>
         <td>€${order.price || order.total || 0}</td>
         <td>${order.status}</td>
         <td>${new Date(order.date).toLocaleDateString()}</td>
@@ -143,4 +169,4 @@ async function loadOrders() {
   } catch (err) {
     console.error("Kon orders niet laden:", err);
   }
-}
+} 

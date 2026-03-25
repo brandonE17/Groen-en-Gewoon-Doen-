@@ -1,12 +1,14 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
-app.use(express.json());
+app.use(cors());          // CORS hier
+app.use(express.json());  // JSON parser
 
-// Login endpoint 
+// Login endpoint  
 // Standaard inloggegevens: gebruikersnaam "admin", wachtwoord "admin123"
 // Pas deze aan naar wens
 const ADMIN_USERNAME = "admin";
@@ -53,6 +55,16 @@ app.post('/rates', (req, res) => {
 
   res.json({ message: "Rate updated", hourlyRate });
 });
+
+// Get all orders
+app.get('/orders', (req, res) => {
+  if (fs.existsSync("orders.json")) {
+    const data = fs.readFileSync("orders.json", "utf8");
+    res.json(JSON.parse(data));
+  } else {
+    res.json([]);
+  }
+}); 
 
 app.post('/orders', (req, res) => {
   const newOrder = req.body;

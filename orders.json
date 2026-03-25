@@ -19,5 +19,42 @@
     "offerte": "€75,-",
     "status": "Afgerond",
     "datum": "8 juni 2026"
+  },
+  {
+    "package": "10 uur pakket",
+    "price": 0
+  },
+  {
+    "package": "50 uur pakket",
+    "price": 0
+  },
+  {
+    "hours": 2,
+    "price": null,
+    "klant": "aa"
+  },
+  {
+    "hours": 0,
+    "price": null,
+    "klant": "vogel"
+  },
+  {
+    "package": "100 uur pakket",
+    "price": 0
+  },
+  {
+    "package": "10 uur pakket",
+    "price": 0,
+    "id": "ORD-1774465653823",
+    "status": "Nieuw",
+    "date": "2026-03-25T19:07:33.823Z"
+  },
+  {
+    "hours": 100,
+    "price": null,
+    "klant": "brandon",
+    "id": "ORD-1774465665863",
+    "status": "Nieuw",
+    "date": "2026-03-25T19:07:45.863Z"
   }
 ]

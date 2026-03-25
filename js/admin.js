@@ -131,6 +131,38 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
+  // Load orders from server
+  async function loadOrders() {
+    try {
+      const res = await fetch("/orders");
+      const orders = await res.json();
+      const tbody = document.getElementById("order-table-body");
+      tbody.innerHTML = "";
+      
+      if (!orders || orders.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6">Er zijn nog geen bestellingen.</td></tr>';
+        return;
+      }
+      
+      orders.forEach(order => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${order.id}</td>
+          <td>${order.klant || "Anoniem"}</td>
+          <td>${order.hours ? order.hours + " uur" : order.package || "N/A"}</td>
+          <td>€${order.price || 0}</td>
+          <td>${order.status}</td>
+          <td>${new Date(order.date).toLocaleDateString()}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    } catch (err) {
+      console.error("Orders laden mislukt:", err);
+    }
+  }
+  
+  window.loadOrders = loadOrders;
+
   // Load packages on page load
   await loadPackages();
 });
@@ -138,13 +170,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 let orderList = [
   {
     id: 1,
-    customer: "Brandon Brandonson",
+    customer: "klant A ",
     items: ["10 uur pakket"],
     total: 17,
   },
   {
     id: 2,
-    customer: "Tijn Tijnson",
+    customer: "klant B",
     items: ["50 uur pakket"],
     total: 85,
   }
@@ -229,8 +261,8 @@ window.openOders = function (evt, tabName) {
     const activeTab = document.getElementById(tabName);
     if (activeTab) activeTab.style.display = "block";
 
-    // Als het de orders tab is, render de orders
+    // Als het de orders tab is, laad orders van server
     if (tabName === "admin-orders") {
-        renderCustomersOrders(orderList);
+        loadOrders();
     }
 };
