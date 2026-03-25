@@ -47,24 +47,60 @@ document.addEventListener("DOMContentLoaded", async function () {
     packageForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const name = document.getElementById("packageName").value;
+      const name = document.getElementById("packageName").value.trim();
       const hours = Number(document.getElementById("packageHours").value);
       const price = Number(document.getElementById("packagePrice").value);
 
+      if (!name || !hours || !price || hours <= 0 || price <= 0) {
+        alert("Vul een geldige naam, uren en prijs in voor het pakket.");
+        return;
+      }
+
+      const apiBase = window.location.origin;
+      const endpoint = `${apiBase}/packages`;
+
       try {
-        const res = await fetch("/packages", {
+        const res = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, hours, price }),
         });
 
-        if (!res.ok) throw new Error("Failed to add package");
+        if (!res.ok) {
+          const body = await res.text();
+          throw new Error(`HTTP ${res.status} - ${res.statusText}: ${body}`);
+        }
 
         packageForm.reset();
         await loadPackages();
+        alert(`Pakket '${name}' is toegevoegd.`);
       } catch (err) {
         console.error("Error adding package:", err);
-        alert("Pakket kon niet toegevoegd worden");
+
+        // tweede poging als origin geen werkende API heeft (common dev issue)
+        if (apiBase !== "http://localhost:3000") {
+          try {
+            const res2 = await fetch("http://localhost:3000/packages", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name, hours, price }),
+            });
+
+            if (!res2.ok) {
+              const body2 = await res2.text();
+              throw new Error(`HTTP ${res2.status} - ${res2.statusText}: ${body2}`);
+            }
+
+            packageForm.reset();
+            await loadPackages();
+            alert(`Pakket '${name}' is toegevoegd via http://localhost:3000.`);
+            return;
+          } catch (err2) {
+            console.error("Fallback error adding package:", err2);
+          }
+        }
+
+        alert("Pakket kon niet toegevoegd worden. Controleer of de backend draait op http://localhost:3000 en probeer opnieuw.");
       }
     });
   }
@@ -99,3 +135,102 @@ document.addEventListener("DOMContentLoaded", async function () {
   await loadPackages();
 });
 
+let orderList = [
+  {
+    id: 1,
+    customer: "Brandon Brandonson",
+    items: ["10 uur pakket"],
+    total: 17,
+  },
+  {
+    id: 2,
+    customer: "Tijn Tijnson",
+    items: ["50 uur pakket"],
+    total: 85,
+  }
+];
+
+function handleOrderAction(orderId, action) {
+  orderList = orderList.filter(order => order.id !== orderId);
+  renderCustomersOrders(orderList);
+  alert(`Order ${orderId} is ${action} en verwijderd uit de lijst.`);
+}
+
+function renderCustomersOrders(orderList) {
+  const tbody = document.getElementById("order-table-body");
+  tbody.innerHTML = "";
+
+  if (!orderList || orderList.length === 0) {
+    tbody.innerHTML = ` 
+      <tr>
+        <td colspan="6">Er zijn nog geen bestellingen.</td>
+      </tr>
+    `;
+    return;
+  }
+
+  orderList.forEach(order => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${order.id}</td>
+      <td>${order.customer}</td>
+      <td>${order.items.join(", ")}</td>
+      <td>€${order.total.toFixed(2)}</td>
+      <td>In behandeling</td>
+      <td class="order-actions">
+        <button class="btn-details">Details</button>
+      </td>
+    `;
+
+    const detailsBtn = row.querySelector(".btn-details");
+    detailsBtn.addEventListener("click", () => {
+      const actionCell = row.querySelector(".order-actions");
+
+      // Toon niet opnieuw als actie-knoppen al zichtbaar zijn
+      if (actionCell.querySelector(".btn-approve")) {
+        return;
+      }
+
+      const approveBtn = document.createElement("button");
+      approveBtn.textContent = "Goedkeuren";
+      approveBtn.className = "btn-approve";
+
+      const rejectBtn = document.createElement("button");
+      rejectBtn.textContent = "Afkeuren";
+      rejectBtn.className = "btn-reject";
+
+      const cancelBtn = document.createElement("button");
+      cancelBtn.textContent = "Annuleren";
+      cancelBtn.className = "btn-cancel";
+
+      actionCell.append(" ", approveBtn, " ", rejectBtn, " ", cancelBtn);
+
+      approveBtn.addEventListener("click", () => handleOrderAction(order.id, "goedgekeurd"));
+      rejectBtn.addEventListener("click", () => handleOrderAction(order.id, "afgekeurd"));
+      cancelBtn.addEventListener("click", () => renderCustomersOrders(orderList));
+    });
+
+    tbody.appendChild(row);
+  });
+}
+renderCustomersOrders(orderList);
+
+window.openOders = function (evt, tabName) {
+    const tabs = ["admin-orders", "admin-packages", "Tarieven-content"];
+
+    // Verberg alles
+    tabs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = "none";
+    });
+
+    // Laat de gevraagde tab zien
+    const activeTab = document.getElementById(tabName);
+    if (activeTab) activeTab.style.display = "block";
+
+    // Als het de orders tab is, render de orders
+    if (tabName === "admin-orders") {
+        renderCustomersOrders(orderList);
+    }
+};
