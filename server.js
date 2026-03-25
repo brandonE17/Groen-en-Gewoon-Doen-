@@ -8,11 +8,7 @@ const app = express();
 app.use(cors());          // CORS hier
 app.use(express.json());  // JSON parser
 
-// Login endpoint  
-// Standaard inloggegevens: gebruikersnaam "admin", wachtwoord "admin123"
-// Pas deze aan naar wens
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "admin123";
+
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
