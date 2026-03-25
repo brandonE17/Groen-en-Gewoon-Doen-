@@ -163,14 +163,15 @@ document.getElementById("calcBtn").addEventListener("click", calculate);
     let hegValue = Number(document.getElementById("heg").value);
 
 const rates = await (await fetch("./data/rates.json")).json();
+const items = Array.isArray(rates.items) ? rates.items : [];
 
 const grassM2 = Number(document.getElementById("gras").value);
 const tegels = Number(document.getElementById("tegels").value);
 const heg = Number(document.getElementById("heg").value);
 
-const grassRate = rates.find(rate => rate.id === "gras").number || 0;
-const tegelsRate = rates.find(rate => rate.id === "tegels").number || 0;
-const hegRate = rates.find(rate => rate.id === "heg").number || 0;
+const grassRate = (items.find(rate => rate.id === "gras") || {}).number || 0;
+const tegelsRate = (items.find(rate => rate.id === "tegels") || {}).number || 0;
+const hegRate = (items.find(rate => rate.id === "heg") || {}).number || 0;
 
 const result = (grassM2 * grassRate) + (tegels * tegelsRate) + (heg * hegRate);
 
@@ -216,4 +217,4 @@ const TableHints = document.getElementById("ordersTable");
     });
   });
   
-});
+};

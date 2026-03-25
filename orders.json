@@ -19,5 +19,17 @@
     "offerte": "€75,-",
     "status": "Afgerond",
     "datum": "8 juni 2026"
+  },
+  {
+    "hours": 12,
+    "price": 840
+  },
+  {
+    "hours": 123,
+    "price": 8610
+  },
+  {
+    "hours": 32,
+    "price": 2240
   }
 ]
