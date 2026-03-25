@@ -7,6 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(__dirname));
 
 // simple logger for all requests
 app.use((req, res, next) => {
@@ -19,6 +20,10 @@ app.get('/status', (req, res) => {
     status: 'Running',
     timestamp: new Date().toISOString()
   });
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // return current rate settings from data/rates.json

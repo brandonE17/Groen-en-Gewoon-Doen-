@@ -131,6 +131,33 @@ if (customForm) {
   });
 }
 
+document.getElementById("calcBtn").addEventListener("click", calculate);
+
+// window.calculate = calculate;
+
+  async function calculate() {
+ 
+    let grasValue = Number(document.getElementById("gras").value);
+    let tegelsValue = Number(document.getElementById("tegels").value);
+    let hegValue = Number(document.getElementById("heg").value);
+
+const rates = await (await fetch("./data/rates.json")).json();
+const items = Array.isArray(rates.items) ? rates.items : [];
+
+const grassM2 = Number(document.getElementById("gras").value);
+const tegels = Number(document.getElementById("tegels").value);
+const heg = Number(document.getElementById("heg").value);
+
+const grassRate = (items.find(rate => rate.id === "gras") || {}).number || 0;
+const tegelsRate = (items.find(rate => rate.id === "tegels") || {}).number || 0;
+const hegRate = (items.find(rate => rate.id === "heg") || {}).number || 0;
+
+const result = (grassM2 * grassRate) + (tegels * tegelsRate) + (heg * hegRate);
+
+document.getElementById("result").innerText =
+     "resultaat:" + result
+
+
 // ================= CALCULATOR =================
 const calcBtn = document.getElementById("calcBtn");
 
@@ -179,5 +206,8 @@ fetch("./orders.json")
 
       table.innerHTML += row;
     });
+  });
+  
+};
   })
   .catch(err => console.error("Error loading orders:", err));
