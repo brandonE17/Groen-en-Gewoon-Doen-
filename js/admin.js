@@ -47,24 +47,60 @@ document.addEventListener("DOMContentLoaded", async function () {
     packageForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const name = document.getElementById("packageName").value;
+      const name = document.getElementById("packageName").value.trim();
       const hours = Number(document.getElementById("packageHours").value);
       const price = Number(document.getElementById("packagePrice").value);
 
+      if (!name || !hours || !price || hours <= 0 || price <= 0) {
+        alert("Vul een geldige naam, uren en prijs in voor het pakket.");
+        return;
+      }
+
+      const apiBase = window.location.origin;
+      const endpoint = `${apiBase}/packages`;
+
       try {
-        const res = await fetch("/packages", {
+        const res = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, hours, price }),
         });
 
-        if (!res.ok) throw new Error("Failed to add package");
+        if (!res.ok) {
+          const body = await res.text();
+          throw new Error(`HTTP ${res.status} - ${res.statusText}: ${body}`);
+        }
 
         packageForm.reset();
         await loadPackages();
+        alert(`Pakket '${name}' is toegevoegd.`);
       } catch (err) {
         console.error("Error adding package:", err);
-        alert("Pakket kon niet toegevoegd worden");
+
+        // tweede poging als origin geen werkende API heeft (common dev issue)
+        if (apiBase !== "http://localhost:3000") {
+          try {
+            const res2 = await fetch("http://localhost:3000/packages", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name, hours, price }),
+            });
+
+            if (!res2.ok) {
+              const body2 = await res2.text();
+              throw new Error(`HTTP ${res2.status} - ${res2.statusText}: ${body2}`);
+            }
+
+            packageForm.reset();
+            await loadPackages();
+            alert(`Pakket '${name}' is toegevoegd via http://localhost:3000.`);
+            return;
+          } catch (err2) {
+            console.error("Fallback error adding package:", err2);
+          }
+        }
+
+        alert("Pakket kon niet toegevoegd worden. Controleer of de backend draait op http://localhost:3000 en probeer opnieuw.");
       }
     });
   }

@@ -32,10 +32,10 @@ app.get('/rates', (req, res) => {
 
 // Update hourly rate
 app.post('/rates', (req, res) => {
-  const { hourlyRate } = req.body;
+  const { hourlyRate } = req.body; 
   let data = { hourlyRate: 70, packages: [] };
 
-  if (fs.existsSync("data/rates.json")) {
+  if (fs.existsSync("data/rates.json")) { 
     data = JSON.parse(fs.readFileSync("data/rates.json", "utf8"));
   }
 
@@ -68,6 +68,18 @@ app.post('/orders', (req, res) => {
 // Manage packages
 app.post('/packages', (req, res) => {
   const newPackage = req.body;
+  if (!newPackage || typeof newPackage !== 'object') {
+    return res.status(400).json({ message: 'Ongeldige request body' });
+  }
+
+  if (!newPackage.name || !newPackage.hours || !newPackage.price) {
+    return res.status(400).json({ message: 'Vul naam, uren en prijs in' });
+  }
+
+  if (Number(newPackage.hours) <= 0 || Number(newPackage.price) <= 0) {
+    return res.status(400).json({ message: 'Uren en prijs moeten groter dan 0 zijn' });
+  }
+
   let data = { hourlyRate: 70, packages: [] };
 
   if (fs.existsSync("data/rates.json")) {
@@ -86,7 +98,6 @@ app.post('/packages', (req, res) => {
 
   res.json({ message: "Package added", package: newPackage });
 });
-
 app.put('/packages/:id', (req, res) => {
   const { id } = req.params;
   const updatedPackage = req.body;
