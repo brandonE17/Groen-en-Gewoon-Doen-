@@ -146,6 +146,26 @@ app.delete('/packages/:id', (req, res) => {
   res.json({ message: "Package deleted" });
 });
 
+// Login endpoint
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({ message: 'Username and password required' });
+  }
+
+  let users = [];
+  if (fs.existsSync("server.json")) {
+    users = JSON.parse(fs.readFileSync("server.json", "utf8"));
+  }
+
+  const user = users.find(u => u.username === username && u.password === password);
+  if (user) {
+    res.json({ message: 'Login successful', user: { username: user.username } });
+  } else {
+    res.status(401).json({ message: 'Invalid credentials' });
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 // bind to 0.0.0.0 so both IPv4 and IPv6 clients can connect
 app.listen(PORT, '0.0.0.0', () => {
