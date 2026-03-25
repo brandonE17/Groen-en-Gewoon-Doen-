@@ -1,11 +1,18 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
+
+// simple logger for all requests
+app.use((req, res, next) => {
+  console.log(`Incoming ${req.method} ${req.url}`);
+  next();
+});
 
 app.get('/status', (req, res) => {
   res.json({
@@ -140,6 +147,7 @@ app.delete('/packages/:id', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+// bind to 0.0.0.0 so both IPv4 and IPv6 clients can connect
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
