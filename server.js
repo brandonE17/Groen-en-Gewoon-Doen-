@@ -18,7 +18,7 @@ app.post('/login', (req, res) => {
     res.status(401).json({ success: false, message: "Ongeldige inloggegevens" });
   }
 });
-
+ 
 app.get('/status', (req, res) => {
   res.json({
     status: 'Running',
