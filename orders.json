@@ -21,99 +21,15 @@
     "datum": "8 juni 2026"
   },
   {
-    "package": "10 uur pakket",
-    "price": 0
-  },
-  {
-    "package": "50 uur pakket",
-    "price": 0
-  },
-  {
-    "hours": 2,
-    "price": null,
-    "klant": "aa"
-  },
-  {
-    "hours": 0,
-    "price": null,
-    "klant": "vogel"
-  },
-  {
-    "package": "100 uur pakket",
-    "price": 0
-  },
-  {
-    "package": "10 uur pakket",
-    "price": 0,
-    "id": "ORD-1774465653823",
-    "status": "Nieuw",
-    "date": "2026-03-25T19:07:33.823Z"
-  },
-  {
-    "hours": 100,
-    "price": null,
-    "klant": "brandon",
-    "id": "ORD-1774465665863",
-    "status": "Nieuw",
-    "date": "2026-03-25T19:07:45.863Z"
-  },
-  {
-    "package": "10 uur pakket",
-    "price": 0,
-    "id": "ORD-1774466443862",
-    "status": "Nieuw",
-    "date": "2026-03-25T19:20:43.862Z"
-  },
-  {
     "hours": 12,
-    "price": 852,
-    "klant": "Job",
-    "id": "ORD-1774466453868",
-    "status": "Nieuw",
-    "date": "2026-03-25T19:20:53.868Z"
+    "price": 840
   },
   {
-    "package": "10 uur pakket",
-    "price": 0,
-    "id": "ORD-1774510899938",
-    "status": "Nieuw",
-    "date": "2026-03-26T07:41:39.938Z"
+    "hours": 123,
+    "price": 8610
   },
   {
-    "package": "10 uur pakket",
-    "price": 0,
-    "id": "ORD-1774512960099",
-    "status": "Nieuw",
-    "date": "2026-03-26T08:16:00.099Z"
-  },
-  {
-    "hours": 11,
-    "price": 33,
-    "klant": "Job",
-    "id": "ORD-1774512976683",
-    "status": "Nieuw",
-    "date": "2026-03-26T08:16:16.683Z"
-  },
-  {
-    "package": "10 uur pakket",
-    "price": 0,
-    "id": "ORD-1774513231422",
-    "status": "Nieuw",
-    "date": "2026-03-26T08:20:31.422Z"
-  },
-  {
-    "package": "10 uur pakket",
-    "price": 0,
-    "id": "ORD-1774515490353",
-    "status": "Nieuw",
-    "date": "2026-03-26T08:58:10.353Z"
-  },
-  {
-    "hours": 33,
-    "price": 99,
-    "klant": "Job",
-    "id": "ORD-1774515499534",
-    "status": "Nieuw",
-    "date": "2026-03-26T08:58:19.534Z"
+    "hours": 32,
+    "price": 2240
   }
 ]

@@ -5,9 +5,9 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors());          // Dit betekent date onze toegankelijk is vanaf elke domeinnaam
-app.use(express.json());  // JSON parser zodat we JSON data kunnen ontvangen in POST requests
-
+app.use(cors());
+app.use(express.json());
+app.use(express.static(__dirname));
 
 
 app.post('/login', (req, res) => {
@@ -24,6 +24,10 @@ app.get('/status', (req, res) => {
     status: 'Running',
     timestamp: new Date().toISOString()
   });
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // return current rate settings from data/rates.json

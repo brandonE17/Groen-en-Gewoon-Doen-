@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
   btn.addEventListener("click", function () {
     if (btn.innerText === "Uitloggen") {
       if (confirm("Weet je zeker dat je wilt uitloggen?")) {
-        // Reset login state
         const messageDiv = document.getElementById("loginMessage");
         messageDiv.style.display = "none";
         btn.innerText = "Login";
@@ -58,8 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Login fout:", err); 
       errorMsg.style.display = "block";
     }
-  }); 
-// dit is voor de custom offer 
+  });
+
+  // Custom offer modal
   const custom = document.getElementById("customOffer");
   const customBtn = document.getElementById("customBtn");
   const span = document.getElementsByClassName("customClose")[0];
@@ -77,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const klantNaam = document.getElementById("klantNaam").value;
 
     try {
-      // fetch hourly rate from server
       const ratesRes = await fetch("/rates");
       const rates = await ratesRes.json();
       const price = hours * rates.hourlyRate;
@@ -97,14 +96,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       custom.style.display = "none";
       e.target.reset();
-      loadOrders(); // herladen van orders zodat nieuwe bestelling direct zichtbaar is
+      loadOrders();
     } catch (err) {
       console.error("Could not submit order:", err);
       alert("Kon bestelling niet verzenden. Controleer of de server draait op http://localhost:3000.");
     }
   });
 
-  // Bestel standaard pakket
+  // Bestel standaard pakket (uit test-branche)
   document.getElementById("bestelStandaard").addEventListener("click", async () => {
     const selected = document.querySelector("select").value;
     try {
@@ -124,12 +123,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-document.getElementById("calcBtn").addEventListener("click", calculate);
-
-// berekenent de prijs van de offerte
+  // Calculator (correcte versie)
+  document.getElementById("calcBtn").addEventListener("click", calculate);
 
   async function calculate() {
- 
     const grassM2 = Number(document.getElementById("gras").value);
     const tegels = Number(document.getElementById("tegels").value);
     const heg = Number(document.getElementById("heg").value);
@@ -144,12 +141,12 @@ document.getElementById("calcBtn").addEventListener("click", calculate);
 
     document.getElementById("result").innerText = "Resultaat: €" + result.toFixed(2);
   }
-  
-  // Laod orders van de server
+
+  // Laden van orders bij start
   loadOrders();
 });
 
-// Load orders from server ( chatGPT)
+// Load orders
 async function loadOrders() {
   try {
     const response = await fetch("./orders.json");
@@ -170,4 +167,4 @@ async function loadOrders() {
   } catch (err) {
     console.error("Kon orders niet laden:", err);
   }
-} 
+}
