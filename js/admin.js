@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  // Load and display packages
+  // laad pakketten van de server en toon ze in de admin interface
   async function loadPackages() {
     try {
       const res = await fetch("/rates");
       const data = await res.json();
       const packagesTable = document.getElementById("packagesTable");
       
-      // Clear existing rows except header
+      // Eerst alle bestaande rijen verwijderen behalve de header ( chatGPT)
       const rows = packagesTable.querySelectorAll("tr:not(:first-child)");
       rows.forEach(row => row.remove());
       
-      // Add package rows
-      if (data.packages && Array.isArray(data.packages)) {
+      // toevoegen van pakketten aan de tabel
+      if (data.packages && Array.isArray(data.packages)) {a
         data.packages.forEach((pkg, index) => {
           const row = packagesTable.insertRow();
           row.innerHTML = `
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  // Delete package
+  // verwijder pakket functie 
   window.deletePackage = async function (id) {
     if (confirm("Weet je zeker dat je dit pakket wilt verwijderen?")) {
       try {
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   };
 
-  // Add new package
+  // toevoegen van pakket functie
   const packageForm = document.getElementById("packageForm");
   if (packageForm) {
     packageForm.addEventListener("submit", async (e) => {
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         alert("Vul een geldige naam, uren en prijs in voor het pakket.");
         return;
       }
-
+// Probeer eerst via de huidige origin te posten, als dat mislukt probeer dan localhost:3000 
       const apiBase = window.location.origin;
       const endpoint = `${apiBase}/packages`;
 
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       } catch (err) {
         console.error("Error adding package:", err);
 
-        // tweede poging als origin geen werkende API heeft (common dev issue)
+        // tweede poging als origin geen werkende API heeft 
         if (apiBase !== "http://localhost:3000") {
           try {
             const res2 = await fetch("http://localhost:3000/packages", {
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               const body2 = await res2.text();
               throw new Error(`HTTP ${res2.status} - ${res2.statusText}: ${body2}`);
             }
-
+// Als deze poging lukt, reset het formulier, herlaad de pakketten en toon een succesmelding
             packageForm.reset();
             await loadPackages();
             alert(`Pakket '${name}' is toegevoegd via http://localhost:3000.`);
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  // Update hourly rate
+  // update van het uurtarief
   const rateForm = document.getElementById("rateForm");
   if (rateForm) {
     rateForm.addEventListener("submit", async (e) => {
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  // Load orders from server
+  // orders laden van de server 
   async function loadOrders() {
     try {
       const res = await fetch("/orders");

@@ -5,7 +5,7 @@
       {
         "name": "10 uur pakket",
         "hours": 10,
-        "price": 700
+        "price": 1000
       },
       {
         "name": "50 uur pakket",
@@ -33,5 +33,5 @@
       "number": 40
     }
   ],
-  "hourlyRate": 3
+  "hourlyRate": 12
 }

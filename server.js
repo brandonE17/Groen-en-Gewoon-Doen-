@@ -1,12 +1,12 @@
-const fs = require("fs");
+const fs = require("fs"); //file system zorgt dat we kunnen  data kunnen lezen en schrijven naar bestanden
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
 
 const app = express();
 
-app.use(cors());          // CORS hier
-app.use(express.json());  // JSON parser
+app.use(cors());          // Dit betekent date onze toegankelijk is vanaf elke domeinnaam
+app.use(express.json());  // JSON parser zodat we JSON data kunnen ontvangen in POST requests
 
 
 

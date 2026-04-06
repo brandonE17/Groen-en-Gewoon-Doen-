@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
       errorMsg.style.display = "block";
     }
   }); 
-
+// dit is voor de custom offer 
   const custom = document.getElementById("customOffer");
   const customBtn = document.getElementById("customBtn");
   const span = document.getElementsByClassName("customClose")[0];
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       custom.style.display = "none";
       e.target.reset();
-      loadOrders(); // Reload orders after submission
+      loadOrders(); // herladen van orders zodat nieuwe bestelling direct zichtbaar is
     } catch (err) {
       console.error("Could not submit order:", err);
       alert("Kon bestelling niet verzenden. Controleer of de server draait op http://localhost:3000.");
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.getElementById("calcBtn").addEventListener("click", calculate);
 
-// window.calculate = calculate;
+// berekenent de prijs van de offerte
 
   async function calculate() {
  
@@ -145,10 +145,11 @@ document.getElementById("calcBtn").addEventListener("click", calculate);
     document.getElementById("result").innerText = "Resultaat: €" + result.toFixed(2);
   }
   
-  // Load orders on page load
+  // Laod orders van de server
   loadOrders();
 });
 
+// Load orders from server ( chatGPT)
 async function loadOrders() {
   try {
     const response = await fetch("./orders.json");
