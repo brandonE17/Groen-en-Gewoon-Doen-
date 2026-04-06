@@ -5,7 +5,7 @@
       {
         "name": "10 uur pakket",
         "hours": 10,
-        "price": 700
+        "price": 1000
       },
       {
         "name": "50 uur pakket",
@@ -20,8 +20,18 @@
     ]
   },
   "items": [
-    { "id": "gras", "number": 25 },
-    { "id": "tegels", "number": 30 },
-    { "id": "heg", "number": 40 }
-  ]
+    {
+      "id": "gras",
+      "number": 25
+    },
+    {
+      "id": "tegels",
+      "number": 30
+    },
+    {
+      "id": "heg",
+      "number": 40
+    }
+  ],
+  "hourlyRate": 12
 }

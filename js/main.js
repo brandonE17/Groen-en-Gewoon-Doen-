@@ -1,213 +1,170 @@
-console.log("main.js loaded");
+document.addEventListener("DOMContentLoaded", function () {
 
-// ================= LOGIN MODAL =================
-const modal = document.getElementById("loginModal");
-const btn = document.getElementById("loginBtn");
-const closeBtn = document.querySelector(".close");
-
-if (btn && modal) {
-  btn.addEventListener("click", () => {
-    modal.style.display = "block";
-  });
-}
-
-if (closeBtn && modal) {
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-}
-
-window.addEventListener("click", (event) => {
-  if (modal && event.target === modal) {
-    modal.style.display = "none";
+  // Check if logged in
+  if (localStorage.getItem('loggedIn') === 'true') {
+    document.getElementById("loginBtn").innerText = "Uitloggen";
   }
-});
 
-// ================= LOGIN =================
-const usernameInput = document.getElementById("username");
-const passwordInput = document.getElementById("password");
-const submitBtn = modal ? modal.querySelector("button[type='submit']") : null;
+  const modal = document.getElementById("loginModal");
+  const btn = document.getElementById("loginBtn");
+  const closeBtn = document.querySelector(".close");
 
-async function handleLogin() {
-  if (!usernameInput || !passwordInput) return;
-
-  const username = usernameInput.value;
-  const password = passwordInput.value;
-
-  console.log("Login attempt with:", username);
-
-  try {
-    const res = await fetch("http://127.0.0.1:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (!res.ok) {
-      throw new Error("Server error");
-    }
-
-    const data = await res.json();
-
-    if (data.success) {
-      alert("Login successful!");
-      modal.style.display = "none";
-      window.location.href = "/admin.html";
+  btn.addEventListener("click", function () {
+    if (btn.innerText === "Uitloggen") {
+      if (confirm("Weet je zeker dat je wilt uitloggen?")) {
+        const messageDiv = document.getElementById("loginMessage");
+        messageDiv.style.display = "none";
+        btn.innerText = "Login";
+        localStorage.removeItem('loggedIn');
+      }
     } else {
-      alert("Invalid credentials");
-    }
-  } catch (err) {
-    console.error("Login error:", err);
-    alert("Login failed. Check if server is running.");
-  }
-}
-
-if (submitBtn && usernameInput && passwordInput) {
-  submitBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    handleLogin();
-  });
-
-  passwordInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleLogin();
+      modal.style.display = "block";
     }
   });
-}
 
-// ================= CUSTOM MODAL =================
-const custom = document.getElementById("customOffer");
-const customBtn = document.getElementById("customBtn");
-const span = document.getElementsByClassName("customClose")[0];
+  closeBtn.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
 
-if (customBtn && custom) {
+  window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  document.getElementById("loginSubmitBtn").addEventListener("click", async function () {
+    const username = document.getElementById("loginUsername").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const errorMsg = document.getElementById("loginError");
+
+    errorMsg.style.display = "none";
+
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (res.ok) {
+        modal.style.display = "none";
+        localStorage.setItem('loggedIn', 'true');
+        window.location.href = "/admin.html";
+      } else {
+        errorMsg.style.display = "block";
+      }
+    } catch (err) {
+      console.error("Login fout:", err); 
+      errorMsg.style.display = "block";
+    }
+  });
+
+  // Custom offer modal
+  const custom = document.getElementById("customOffer");
+  const customBtn = document.getElementById("customBtn");
+  const span = document.getElementsByClassName("customClose")[0];
+
   customBtn.onclick = () => (custom.style.display = "block");
-}
-
-if (span && custom) {
   span.onclick = () => (custom.style.display = "none");
-}
+  window.onclick = (event) => {
+    if (event.target === custom) custom.style.display = "none";
+  };
 
-window.addEventListener("click", (event) => {
-  if (custom && event.target === custom) {
-    custom.style.display = "none";
-  }
-});
-
-// ================= CUSTOM FORM =================
-const customForm = document.getElementById("customForm");
-
-if (customForm) {
-  customForm.addEventListener("submit", async (e) => {
+  document.getElementById("customForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const hours = Number(document.getElementById("Hours").value);
+    const klantNaam = document.getElementById("klantNaam").value;
 
     try {
-      const ratesRes = await fetch("http://localhost:3000/rates");
+      const ratesRes = await fetch("/rates");
       const rates = await ratesRes.json();
-
       const price = hours * rates.hourlyRate;
 
-      const res = await fetch("http://localhost:3000/orders", {
+      const res = await fetch("/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ hours, price }),
+        body: JSON.stringify({ hours, price, klant: klantNaam }),
       });
 
       if (!res.ok) {
         throw new Error(`Request failed: ${res.status}`);
       }
 
-      await res.json();
+      const data = await res.json();
+      console.log(data);
 
       custom.style.display = "none";
       e.target.reset();
+      loadOrders();
     } catch (err) {
       console.error("Could not submit order:", err);
-      alert("Kon bestelling niet verzenden.");
+      alert("Kon bestelling niet verzenden. Controleer of de server draait op http://localhost:3000.");
     }
   });
-}
 
-document.getElementById("calcBtn").addEventListener("click", calculate);
+  // Bestel standaard pakket (uit test-branche)
+  document.getElementById("bestelStandaard").addEventListener("click", async () => {
+    const selected = document.querySelector("select").value;
+    try {
+      const res = await fetch("/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ package: selected, price: 0 })
+      });
+      if (res.ok) {
+        alert("Bestelling geplaatst!");
+        loadOrders();
+      } else {
+        alert("Fout bij bestellen");
+      }
+    } catch (err) {
+      alert("Fout: " + err.message);
+    }
+  });
 
-// window.calculate = calculate;
+  // Calculator (correcte versie)
+  document.getElementById("calcBtn").addEventListener("click", calculate);
 
   async function calculate() {
- 
-    let grasValue = Number(document.getElementById("gras").value);
-    let tegelsValue = Number(document.getElementById("tegels").value);
-    let hegValue = Number(document.getElementById("heg").value);
-
-const rates = await (await fetch("./data/rates.json")).json();
-const items = Array.isArray(rates.items) ? rates.items : [];
-
-const grassM2 = Number(document.getElementById("gras").value);
-const tegels = Number(document.getElementById("tegels").value);
-const heg = Number(document.getElementById("heg").value);
-
-const grassRate = (items.find(rate => rate.id === "gras") || {}).number || 0;
-const tegelsRate = (items.find(rate => rate.id === "tegels") || {}).number || 0;
-const hegRate = (items.find(rate => rate.id === "heg") || {}).number || 0;
-
-const result = (grassM2 * grassRate) + (tegels * tegelsRate) + (heg * hegRate);
-
-document.getElementById("result").innerText =
-     "resultaat:" + result
-
-
-// ================= CALCULATOR =================
-const calcBtn = document.getElementById("calcBtn");
-
-if (calcBtn) {
-  calcBtn.addEventListener("click", calculate);
-}
-
-async function calculate() {
-  try {
-    const rates = await (await fetch("./data/rates.json")).json();
-
     const grassM2 = Number(document.getElementById("gras").value);
     const tegels = Number(document.getElementById("tegels").value);
     const heg = Number(document.getElementById("heg").value);
 
-    const grassRate = rates.find(r => r.id === "gras")?.number || 0;
-    const tegelsRate = rates.find(r => r.id === "tegels")?.number || 0;
-    const hegRate = rates.find(r => r.id === "heg")?.number || 0;
+    const rates = await (await fetch("./data/rates.json")).json();
+
+    const grassRate = rates.items.find(rate => rate.id === "gras").number || 0;
+    const tegelsRate = rates.items.find(rate => rate.id === "tegels").number || 0;
+    const hegRate = rates.items.find(rate => rate.id === "heg").number || 0;
 
     const result = (grassM2 * grassRate) + (tegels * tegelsRate) + (heg * hegRate);
 
-    document.getElementById("result").innerText = "resultaat: " + result;
+    document.getElementById("result").innerText = "Resultaat: €" + result.toFixed(2);
+  }
+
+  // Laden van orders bij start
+  loadOrders();
+});
+
+// Load orders
+async function loadOrders() {
+  try {
+    const response = await fetch("./orders.json");
+    const orders = await response.json();
+    const tbody = document.getElementById("ordersTable");
+    tbody.innerHTML = "";
+    orders.forEach(order => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${order.id}</td>
+        <td>${order.klant || "Anoniem"} - ${order.hours ? order.hours + " uur" : order.package || "N/A"}</td>
+        <td>€${order.price || order.total || 0}</td>
+        <td>${order.status}</td>
+        <td>${new Date(order.date).toLocaleDateString()}</td>
+      `;
+      tbody.appendChild(row);
+    });
   } catch (err) {
-    console.error("Calculation error:", err);
+    console.error("Kon orders niet laden:", err);
   }
 }
-
-// ================= ORDERS TABLE =================
-fetch("./orders.json")
-  .then(response => response.json())
-  .then(data => {
-    const table = document.getElementById("ordersTable");
-
-    if (!table) return;
-
-    data.forEach((order) => {
-      const row = `
-        <tr>
-          <td>${order.id}</td>
-          <td>${order.pakket}</td>
-          <td>${order.offerte}</td>
-          <td>${order.status}</td>
-          <td>${order.datum}</td>
-        </tr>
-      `;
-
-      table.innerHTML += row;
-    });
-  });
-  
-};
-  })
-  .catch(err => console.error("Error loading orders:", err));
